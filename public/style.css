@@ -1,0 +1,45 @@
+/* General styling for the notice box */
+.MHS_INTERVIEW_TASK_1_NoticeBox {
+    padding: 20px;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+}
+
+/* Background styling for the notice box's danger state */
+.MHS_INTERVIEW_TASK_1_NoticeBox.Danger {
+    background-color: #f44336;
+}
+
+/* Background styling for the notice box's success state */
+.MHS_INTERVIEW_TASK_1_NoticeBox.Success {
+    background-color: #04AA6D;
+}
+
+/* Background styling for the notice box's info state */
+.MHS_INTERVIEW_TASK_1_NoticeBox.Info {
+    background-color: #2196F3;
+}
+
+/* Background styling for the notice box's warning state */
+.MHS_INTERVIEW_TASK_1_NoticeBox.Warning {
+    background-color: #ff9800;
+}
+
+/* Styling for the notice box's close button */
+.MHS_INTERVIEW_TASK_1_CloseButton {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Styling for the notice box's close button's hover state */
+.MHS_INTERVIEW_TASK_1_CloseButton:hover {
+    color: black;
+}
