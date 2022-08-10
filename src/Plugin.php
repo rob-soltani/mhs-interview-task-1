@@ -8,43 +8,60 @@ class NoticeBox
 {
 
     // A function responsible for generating the HTML code for the shortcode
-    public static function Generate($Type, $Message)
+    public static function Generate($Attributes = [], $Content = null)
     {
+        
+
+        // Normalize attribute keys to lowercase
+        $Attributes = array_change_key_case((array) $Attributes, CASE_LOWER);
+
+        // Override default attributes with user attributes
+        $Attributes = shortcode_atts(
+            array(
+                'type' => 'info',
+                'message' => '',
+            ),
+            $Attributes
+        );
+
+    
+
+        // Get notice box type and normalize to lower case
+        $NoticeBox_Type = strtolower($Attributes['type']);
+
+        // Get notice box message
+        $NoticeBox_Message = $Attributes['message'];
+
+
+        // Normalize NoticeBox type
+        if (strcmp($NoticeBox_Type, 'info') == 0) {
+            $NoticeBox_Type = 'Info';
+        } elseif (strcmp($NoticeBox_Type, 'danger') == 0) {
+            $NoticeBox_Type = 'Danger';
+        } elseif (strcmp($NoticeBox_Type, 'warning') == 0) {
+            $NoticeBox_Type = 'Warning';
+        } elseif (strcmp($NoticeBox_Type, 'success') == 0) {
+            $NoticeBox_Type = 'Success';
+        } else {
+            $NoticeBox_Type = 'Info';
+        }
+
 
         // Enqueue (include) the plugin's CSS styles file in the head tag
-        wp_enqueue_style( 'MHS_INTERVIEW_TASK_1_CSS' );
-        
+        wp_enqueue_style('MHS_INTERVIEW_TASK_1_CSS');
+
         // Enqueue (include) the plugin's JavaScript file on the page
-        wp_enqueue_script( 'MHS_INTERVIEW_TASK_1_JS' );
+        wp_enqueue_script('MHS_INTERVIEW_TASK_1_JS');
 
 
-        $HTML  = '<div class="MHS_INTERVIEW_TASK_1_NoticeBox Danger">';
+        // Construct the output
+        $HTML  = '<div class="MHS_INTERVIEW_TASK_1_NoticeBox ' . $NoticeBox_Type . '">';
         $HTML .= '  <span class="MHS_INTERVIEW_TASK_1_CloseButton">&times;</span>';
-        $HTML .= '  <strong>Danger!</strong>';
-        $HTML .= '  Indicates a dangerous or potentially negative action.';
+        $HTML .= '  <strong>' . $NoticeBox_Type . '!</strong>';
+        $HTML .= '  ' . $NoticeBox_Message;
         $HTML .= '</div>';
-
-        $HTML .= '<div class="MHS_INTERVIEW_TASK_1_NoticeBox Success">';
-        $HTML .= '  <span class="MHS_INTERVIEW_TASK_1_CloseButton">&times;</span>';
-        $HTML .= '  <strong>Success!</strong>';
-        $HTML .= '  Indicates a successful or positive action.';
-        $HTML .= '</div>';
-
-        $HTML .= '<div class="MHS_INTERVIEW_TASK_1_NoticeBox Info">';
-        $HTML .= '  <span class="MHS_INTERVIEW_TASK_1_CloseButton">&times;</span>';
-        $HTML .= '  <strong>Info!</strong>';
-        $HTML .= '  Indicates a neutral informative change or action.';
-        $HTML .= '</div>';
-
-        $HTML .= '<div class="MHS_INTERVIEW_TASK_1_NoticeBox Warning">';
-        $HTML .= '  <span class="MHS_INTERVIEW_TASK_1_CloseButton">&times;</span>';
-        $HTML .= '  <strong>Warning!</strong>';
-        $HTML .= '  Indicates a warning that might need attention.';
-        $HTML .= '</div>';
-      
 
         return $HTML;
-        
     }
 
     // A function to initialize and register the NoticeBox shortcode
@@ -52,14 +69,14 @@ class NoticeBox
     {
 
         // Register the plugin's CSS styles file
-        wp_register_style( 'MHS_INTERVIEW_TASK_1_CSS', plugins_url( '../public/style.css', __FILE__ ), array(), '0.0.1', 'all' );
-      
+        wp_register_style('MHS_INTERVIEW_TASK_1_CSS', plugins_url('../public/style.css', __FILE__), array(), '0.0.1', 'all');
+
         // Register the plugin's JavaScript file
-        wp_register_script( 'MHS_INTERVIEW_TASK_1_JS', plugins_url('../public/script.js', __FILE__), array(),'', true);
+        wp_register_script('MHS_INTERVIEW_TASK_1_JS', plugins_url('../public/script.js', __FILE__), array(), '', true);
 
         // Register the shortcode using plugin-specific tag and it's callback
-        add_shortcode( 'MHS_INTERVIEW_TASK_1_NoticeBox', 'MHS_INTERVIEW_TASK_1\NoticeBox::Generate' );
-        
+        add_shortcode('MHS_INTERVIEW_TASK_1_NoticeBox', 'MHS_INTERVIEW_TASK_1\NoticeBox::Generate');
+
     }
 
 }
