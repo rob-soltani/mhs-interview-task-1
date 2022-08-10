@@ -15,6 +15,14 @@
  * Domain Path: /public/lang
  */
 
+// Declare the MHS Interview Task 1 namespace
 namespace MHS_INTERVIEW_TASK_1;
 
+// Define a constant to hold the path to the root directory of the plugin
+define('MHS_INTERVIEW_TASK_1_ROOT_DIR', plugin_dir_path(__FILE__));
 
+// Import the main plugin class
+require_once MHS_INTERVIEW_TASK_1_ROOT_DIR . 'src/Plugin.php';
+
+// Statically (singular instance) initiate the NoticeBox class
+NoticeBox::Initiate();
